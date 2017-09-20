@@ -927,12 +927,16 @@ export class AppStore {
       }
     }
 
-    const editors = await getAvailableEditors()
-    if (editors.length) {
-      const value = editors[0].editor
-      // store this value to avoid the lookup next time
-      localStorage.setItem(externalEditorKey, value)
-      return value
+    try {
+      const editors = await getAvailableEditors()
+      if (editors.length) {
+        const value = editors[0].editor
+        // store this value to avoid the lookup next time
+        localStorage.setItem(externalEditorKey, value)
+        return value
+      }
+    } catch (e) {
+      console.log(e)
     }
 
     return null
